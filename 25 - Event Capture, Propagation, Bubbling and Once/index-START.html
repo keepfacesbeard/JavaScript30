@@ -42,6 +42,21 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    e.stopPropagation();   //stops the bubbling or capture and only gets first element trigger, not parents
+  }
+  divs.forEach(div => div.addEventListener('click', logText, {
+    // capture: true  //runs function top to bottom vs bubble (bottom to top in elements nest)
+    capture: false,  //default, goes bottom to top (bubbling)
+    once: true  //listens ffor click only once and never again until page reload. useful for things like checkout buttons
+  }));
+//as written the above code, if you click three, will log three, then two, then one, then stop logging.
+//the once: true flag seems to just tell each element to run once, and so the stop propagation kind of
+// works, in that each element only runs once, but if you click three, since three doesn't run, it
+// essentially clicks its parent, two, and then again, for one. then no more functions
 
 </script>
 </body>
